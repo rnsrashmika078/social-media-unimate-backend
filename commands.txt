@@ -1,0 +1,32 @@
+php artisan make:controller TestController
+php artisan make:migration create_test_table
+php artisan migrate
+php artisan tinker
+   DB::table('test')->insert([
+        'message' => 'my first test data',
+        'created_at' => now(),
+        'updated_at' => now()
+    ]);
+
+php artisan migrate:fresh
+php artisan migrate:rollback
+php artisan make:model test     
+
+  $user = \App\Models\User::create([
+	'name' => 'rashmika',
+	'email' => 'rnsrashmika078@gmail.com',
+	'password' => bcrypt('testingpassword')
+]);
+
+
+$message = $user->messages()->create([
+	'message' => 'Hi hi .. hows going today'
+])
+
+$user  = \App\Models\User::with('messages')->latest()->take(50)->get();    
+php artisan make:seeder SeederName
+php artisan db:seed --class=ChirpSeeder
+php artisan install:api
+
+
+ 
