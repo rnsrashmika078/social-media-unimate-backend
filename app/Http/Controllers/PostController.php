@@ -82,7 +82,7 @@ class PostController extends Controller
     {
         try {
             $post = Post::findOrFail($post_id);
-            $friend = Post::findOrFail($friend_id);
+            // $friend = Post::findOrFail($friend_id);
 
             $alreadyLiked = $post->likes()->where('friend_id', $friend_id)->exists();
 

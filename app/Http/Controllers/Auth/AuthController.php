@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -44,7 +45,7 @@ class AuthController extends Controller
             $token = $user->createToken($user->name);
 
             return response()->json([
-                'message' => 'login succesfull!',
+                'message' => 'login successful!',
                 'user' =>   $user,
                 'token' => $token->plainTextToken
             ]);

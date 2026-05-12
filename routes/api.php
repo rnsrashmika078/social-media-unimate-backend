@@ -13,11 +13,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::apiResource('friends', FriendController::class)->middleware('auth:sanctum');
+    // Route::apiResource('friends', FriendController::class);
     Route::apiResource('posts', PostController::class);
-    Route::post('posts/{post_id}/like/{friend_id}', [PostController::class, 'toggleLike']);
+    Route::post('posts/{post_id}/like/{friend_id}', action: [PostController::class, 'toggleLike']);
 });
 Route::prefix('v1/auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login'])->name('login');;
+    Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 });
