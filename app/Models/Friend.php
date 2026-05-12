@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Sanctum\HasApiTokens;
 
 class Friend extends Model
 {
-     protected $fillable = [
+    use HasApiTokens;
+    protected $fillable = [
         'firstName',
         'lastName',
         'address',
