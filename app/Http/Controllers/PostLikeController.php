@@ -2,20 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post_Like;
 use Illuminate\Http\Request;
 
-class TestController extends Controller
+class PostLikeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $test = [
-            ['author' => 'Rashmika', 'village' => 'Ratnapura']
-        ];
-
-        return view('home', ['test' => $test]);
+        //
     }
 
     /**
@@ -37,7 +34,7 @@ class TestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post_Like $post_Like)
     {
         //
     }
@@ -45,7 +42,7 @@ class TestController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post_Like $post_Like)
     {
         //
     }
@@ -53,7 +50,7 @@ class TestController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post_Like $post_Like)
     {
         //
     }
@@ -61,7 +58,7 @@ class TestController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post_Like $post_Like)
     {
         //
     }

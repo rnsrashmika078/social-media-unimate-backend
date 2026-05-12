@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -30,8 +31,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function messages(): HasMany
+
+    public function post()
     {
-        return $this->hasMany(Message::class);
+        return $this->hasMany(Post::class, 'friend_id');
+    }
+    public function post_likes()
+    {
+        return $this->belongsTo(Post::class, 'post_likes');
     }
 }

@@ -11,21 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('test', function (Blueprint $table) {
+        Schema::create('friends', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->string('message', 255);
+            $table->string('firstName');
+            $table->string('lastName');
+            $table->string('address');
+            $table->string('email')->unique();
+            $table->string('username')->unique();
+            $table->string('dp');
+            $table->string('title');
             $table->timestamps();
         });
     }
-
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('test');
+        Schema::dropIfExists('friends');
     }
 };

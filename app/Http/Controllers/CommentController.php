@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Message;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
-class MessageController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index() {}
+    public function index()
+    {
+        //
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -25,21 +28,13 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'message' => 'required|string|max:255'
-        ]);
-        $messages = Message::create($validatedData);
-        return response()->json([
-            'message' => 'message stored successfully!',
-            'status' => 'success',
-            'data' => $messages,
-        ], 201);
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Comment $comment)
     {
         //
     }
@@ -47,7 +42,7 @@ class MessageController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Comment $comment)
     {
         //
     }
@@ -55,7 +50,7 @@ class MessageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Comment $comment)
     {
         //
     }
@@ -63,7 +58,7 @@ class MessageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Comment $comment)
     {
         //
     }
