@@ -5,51 +5,136 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\PostComments;
 use App\Models\PostLikes;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
 
+
     public function likePost($post_id, $user_id)
     {
+        try {
+            $user = User::findOrFail($user_id);
 
-        // $user = auth()->user();
+            if ($user->likedPosts()->where('post_id', $post_id)->exists()) {
+                $user->likedPosts()->detach($post_id);
+                return response()->json([
+                    'message' => 'You have disliked this post',
+                    'isLike' => false
 
-        // $user->likedPosts()->attach($id);
-        $data = [
-            'post_id' => $post_id,
-            'user_id' => $user_id
-        ];
-        PostLikes::create($data);
+                ]);
+            }
 
-        return response()->json([
-            'message' => 'You have liked this post',
-        ]);
+            // if (!$user->likedPosts()->where('post_id', $post_id)->exists()) {
+            //     $user->likedPosts()->attach($post_id);
+            // }
+
+            $user->likedPosts()->attach($post_id);
+            return response()->json([
+                'message' => 'You have liked this post',
+                'isLike' => true
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
+    public function getLikeByPostId($post_id)
+    {
+        try {
+            $likes = Post::with('likedByUsers')->findOrFail($post_id);
+
+            return response()->json([
+                'message' => 'get likes user of this post',
+                'likes' => $likes
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
     public function commentPost(Request $request, $post_id, $user_id)
     {
-     
-        $data = [
-            'post_id' => $post_id,
-            'user_id' => $user_id,
-            'comment' => $request->comment
-        ];
-        PostComments::create($data);
+        try {
+            $request->validate([
+                'comment' => 'required|string'
+            ]);
 
-        return response()->json([
-            'message' => 'You have Commented on this post',
-        ]);
+            $post = Post::findOrFail($post_id);
+
+            PostComments::create([
+                'post_id' => $post->id,
+                'user_id' => $user_id,
+                'comment' => $request->comment
+            ]);
+
+            return response()->json([
+                'message' => 'You have Commented on this post',
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
-    public function getPosts($id)
+    public function getCommentByPostId($post_id)
+    {
+        try {
+
+            $comments = PostComments::with(['user'])->where('post_id', $post_id)->get();
+            return response()->json([
+                'message' => 'all comments are received belong to the post',
+                'comments' => $comments
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+    public function getPostsByMe($id)
     {
 
-        $allPosts = Post::with(['user', 'likedPosts', 'commentPosts'])
-            ->where('user_id', $id)
-            ->get();
-        return response()->json([
-            'message' => 'Retrived all posts successfully!',
-            'post' => $allPosts,
-        ]);
+        try {
+            $allPosts = Post::with(['user', 'likedByUsers', 'comments.user'])
+                ->where('user_id', $id)
+                ->get();
+            return response()->json([
+                'message' => 'Retried all posts successfully!',
+                'post' => $allPosts,
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+    public function getPosts()
+    {
+        try {
+            $allPosts = Post::with(['user'])->withCount('comments', 'likedByUsers')
+                ->get();
+            return response()->json([
+                'message' => 'Retrieved all posts successfully!',
+                'post' => $allPosts,
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'message' => $e->getMessage(),
+            ]);
+        }
+        // comments in user and user in PostComments
+
     }
     public function addPost(Request $request)
     {

@@ -10,6 +10,8 @@ class Post extends Model
         'content',
         'attachment',
         'user_id',
+        'likes_count',
+        'comments_count'
     ];
 
 
@@ -18,12 +20,12 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function likedPosts()
+    public function likedByUsers()
     {
         return $this->belongsToMany(User::class, 'post_likes');
     }
-    public function commentPosts()
+    public function comments()
     {
-        return $this->belongsToMany(Post::class, 'post_comments');
+        return $this->hasMany(PostComments::class);
     }
 }

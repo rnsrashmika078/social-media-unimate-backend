@@ -11,7 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['username', 'email', 'password', 'dp'])]
+#[Fillable(['firstname', 'lastname', 'username', 'email', 'password', 'dp'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -38,8 +38,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Post::class, 'post_likes');
     }
-    public function commentPosts()
+    public function comments()
     {
-        return $this->belongsToMany(Post::class, 'post_comments');
+        return $this->hasMany(PostComments::class);
     }
 }

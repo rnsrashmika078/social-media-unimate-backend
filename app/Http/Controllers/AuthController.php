@@ -9,10 +9,29 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+
+    public function getUserProfile($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            return response()->json([
+                'message' => 'user profile retried successfully!',
+                'user' => $user
+
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+
+            ]);
+        }
+    }
     public function register(Request $request)
     {
         try {
             $fields =  $request->validate([
+                'firstname' => "required",
+                'lastname' => 'required',
                 'username' => 'required',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|confirmed',
