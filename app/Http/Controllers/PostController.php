@@ -141,7 +141,9 @@ class PostController extends Controller
         $data = $request->validate([
             'content' => 'required',
             'attachment' => 'required',
-            'user_id' => 'required'
+            'user_id' => 'required',
+            'likes_count' => 'required',
+            'comments_count' => 'required'
 
         ]);
         $post = Post::create($data);
