@@ -10,6 +10,7 @@ COPY . .
 
 
 RUN composer install --no-interaction --prefer-dist
+RUN touch database/database.sqlite
 
 
 RUN mkdir -p storage/framework/views \
@@ -23,7 +24,6 @@ RUN php artisan config:clear || true \
     && php artisan cache:clear || true \
     && php artisan view:clear || true
 
-RUN touch database/database.sqlite
 
 RUN mkdir -p storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
