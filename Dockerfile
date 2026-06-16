@@ -8,28 +8,10 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
-
 RUN composer install --no-interaction --prefer-dist
-RUN touch database/database.sqlite
-
-
-RUN mkdir -p storage/framework/views \
-    storage/framework/cache \
-    storage/framework/sessions \
-    bootstrap/cache \
-    && chmod -R 777 storage bootstrap/cache storage/framework
-
-
-RUN php artisan config:clear || true \
-    && php artisan cache:clear || true \
-    && php artisan view:clear || true
-
 
 RUN mkdir -p storage bootstrap/cache \
-    && chmod -R 775 storage bootstrap/cache
-
-RUN cp .env.example .env \
-    && php artisan key:generate && php artisan migrate
+    && chmod -R 777 storage bootstrap/cache
 
 EXPOSE 8000
 
