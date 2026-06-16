@@ -11,7 +11,7 @@ COPY . .
 RUN composer install --no-interaction --prefer-dist
 
 RUN cp .env.example .env \
-    && php artisan key:generate
+    && php artisan key:generate && php artisan migrate
 
 EXPOSE 8000
 
