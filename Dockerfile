@@ -8,8 +8,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
+
 RUN composer install --no-interaction --prefer-dist
 
+RUN mkdir -p storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+    
 RUN cp .env.example .env \
     && php artisan key:generate && php artisan migrate
 
