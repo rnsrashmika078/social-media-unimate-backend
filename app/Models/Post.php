@@ -10,8 +10,8 @@ class Post extends Model
         'content',
         'attachment',
         'user_id',
-        'likes_count',
-        'comments_count'
+        // 'likes_count',
+        // 'comments_count'
     ];
 
 

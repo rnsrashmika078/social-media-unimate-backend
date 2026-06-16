@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# Dependencies
+vendor
+node_modules
+
+# Environment files
+.env
+.env.*
+
+# Laravel cache
+storage/logs
+storage/framework/cache
+storage/framework/sessions
+storage/framework/views
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode
+.idea
+
+# Tests (optional)
+tests

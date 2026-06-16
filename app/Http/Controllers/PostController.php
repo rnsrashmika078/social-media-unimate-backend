@@ -142,8 +142,8 @@ class PostController extends Controller
             'content' => 'required',
             'attachment' => 'required',
             'user_id' => 'required',
-            'likes_count' => 'required',
-            'comments_count' => 'required'
+            // 'likes_count' => 'required',
+            // 'comments_count' => 'required'
 
         ]);
         $post = Post::create($data);
