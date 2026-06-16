@@ -2,14 +2,16 @@ FROM php:8.4
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
-    git curl zip unzip
+RUN apt-get update && apt-get install -y git curl zip unzip
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
-RUN composer install
+RUN composer install --no-interaction --prefer-dist
+
+RUN cp .env.example .env \
+    && php artisan key:generate
 
 EXPOSE 8000
 
