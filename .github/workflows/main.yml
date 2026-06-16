@@ -21,30 +21,19 @@ jobs:
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
               cd /home/Rashmika
-            
+              
               # clone repo if not exists
               if [ ! -d "laravel-app" ]; then
                 git clone https://github.com/rnsrashmika078/social-media-unimate-backend.git laravel-app
               fi
-            
+              
               cd laravel-app
-            
+              
               # pull latest code
               git pull origin main
             
-              # install dependencies FIRST
-              composer install --no-interaction --prefer-dist --optimize-autoloader
+           
             
-              # copy env ONLY if not exists
-              if [ ! -f ".env" ]; then
-                cp .env.example .env
-              fi
-            
-              # generate app key ONLY if empty
-              php artisan key:generate --force
-            
-              # migrations
-              php artisan migrate --force
             
               # restart container
               docker stop laravel_app || true
