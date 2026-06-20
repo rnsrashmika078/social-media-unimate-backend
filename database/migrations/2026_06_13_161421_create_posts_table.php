@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('content');
             $table->string("attachment")->nullable();
-            $table->integer('likes_count');
-            $table->integer('comments_count');
+            // $table->integer('likes_count')->nullable();
+            // $table->integer('comments_count')->nullable();
             $table->timestamps();
         });
     }

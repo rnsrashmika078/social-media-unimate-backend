@@ -109,7 +109,7 @@ class PostController extends Controller
                 ->get();
             return response()->json([
                 'message' => 'Retried all posts successfully!',
-                'post' => $allPosts,
+                'data' => $allPosts,
             ]);
         } catch (\Exception $e) {
 
@@ -118,14 +118,20 @@ class PostController extends Controller
             ]);
         }
     }
-    public function getPosts()
+    public function getPosts(Request $request)
     {
         try {
-            $allPosts = Post::with(['user'])->withCount('comments', 'likedByUsers')
-                ->get();
+
+            $page = $request->query('page', 1);
+            $perPage = $request->query('limit', 2);
+
+            $allPosts = Post::with(['user'])->withCount('comments', 'likedByUsers')->orderBy('created_at', 'desc')->paginate($perPage, ['*'], 'page', $page);
             return response()->json([
+
                 'message' => 'Retrieved all posts successfully!',
-                'post' => $allPosts,
+                'data' => $allPosts->items(),
+                'hasMore' => $allPosts->hasMorePages(),
+                'currentPage' => $allPosts->currentPage()
             ]);
         } catch (\Exception $e) {
 
@@ -140,7 +146,7 @@ class PostController extends Controller
     {
         $data = $request->validate([
             'content' => 'required',
-            'attachment' => 'required',
+            'attachment' => 'nullable',
             'user_id' => 'required',
             // 'likes_count' => 'required',
             // 'comments_count' => 'required'
