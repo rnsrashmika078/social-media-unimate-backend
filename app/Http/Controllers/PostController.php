@@ -125,7 +125,7 @@ class PostController extends Controller
             $page = $request->query('page', 1);
             $perPage = $request->query('limit', 2);
 
-            $allPosts = Post::with(['user'])->withCount('comments', 'likedByUsers')->orderBy('created_at', 'desc')->paginate($perPage, ['*'], 'page', $page);
+            $allPosts = Post::with(['user', 'likedByUsers:id'])->withCount('comments', 'likedByUsers')->orderBy('created_at', 'desc')->paginate($perPage, ['*'], 'page', $page);
             return response()->json([
 
                 'message' => 'Retrieved all posts successfully!',

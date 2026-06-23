@@ -29,7 +29,7 @@ Route::prefix('v1/user')->group(function () {
 
 
 Route::prefix('v1/post')->group(function () {
-    Route::post('/', [PostController::class, 'addPost']);
+    Route::post('/add', [PostController::class, 'addPost']);
     Route::get('/{id}', action: [PostController::class, 'getPostsByMe']);
     Route::get('/', action: [PostController::class, 'getPosts']);
     Route::delete('/{id}', action: [PostController::class, 'deletePost']);
