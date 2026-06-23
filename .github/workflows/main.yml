@@ -38,7 +38,7 @@ jobs:
               # restart container
               docker stop laravel_app || true
               docker rm laravel_app || true
-            
+              docker container prune -f || true
               docker build -t laravel-app .
-            
               docker run -d -p 8000:8000 --name laravel_app laravel-app
+            
