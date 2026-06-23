@@ -5,7 +5,8 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://20.207.201.226:3000'],
+    'allowed_origins' => ['http://20.207.201.226:3000', 'http://localhost:3000'],
+
 
     'allowed_origins_patterns' => [],
 
@@ -17,5 +18,5 @@ return [
 
     'supports_credentials' => true,
 
-    
+
 ];
