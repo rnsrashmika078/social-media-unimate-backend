@@ -5,7 +5,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://social-media-unimate-frontend-nine.vercel.app/sign-in', 'http://localhost:3000'],
+    'allowed_origins' => ['http://40.80.80.129:3000', 'http://localhost:3000'],
 
 
     'allowed_origins_patterns' => [],
