@@ -124,8 +124,11 @@ class PostController extends Controller
 
             $page = $request->query('page', 1);
             $perPage = $request->query('limit', 2);
+            $userId = $request->query('userId', null);
 
-            $allPosts = Post::with(['user', 'likedByUsers:id'])->withCount('comments', 'likedByUsers')->orderBy('created_at', 'desc')->paginate($perPage, ['*'], 'page', $page);
+            $allPosts = Post::with(['user', 'likedByUsers:id'])->when($userId, function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            })->withCount('comments', 'likedByUsers')->orderBy('created_at', 'desc')->paginate($perPage, ['*'], 'page', $page);
             return response()->json([
 
                 'message' => 'Retrieved all posts successfully!',
@@ -177,7 +180,9 @@ class PostController extends Controller
     }
     public function deletePost($id)
     {
-        Post::where('id', $id)->delete();
+        $post = Post::findOrFail($id);
+        $post->delete();
+
         return response()->json([
             'message' => 'Post deleted successfully!',
         ]);
